@@ -1,12 +1,23 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import ListaTarea from "./ListaTarea";
 
 const FormularioTarea = () => {
+  // buscar las tareas en localStorage si es que existe
+  const tareasLocalstorage =
+    JSON.parse(localStorage.getItem(`listaTareas`)) || [];
   // zona donde agregamos la mayoria de la logica
-  const [tarea, setTarea] = useState([]);
-  const [arregloTareas, setArregloTareas] = useState([]);
+  const [tarea, setTarea] = useState("");
+  const [arregloTareas, setArregloTareas] = useState([tareasLocalstorage]);
+
+  // ciclo de vida de un componente
+
+  useEffect(() => {
+    // console.log("prueba de ciclo de vida");
+    // guardar el arreglo de las tareas en localStorage
+    localStorage.setItem(`listaTareas`, JSON.stringify(arregloTareas));
+  }, [arregloTareas]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
